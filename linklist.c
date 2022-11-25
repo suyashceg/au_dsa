@@ -66,23 +66,13 @@ void main()
 
 void addbeg(struct node **p)
 {
-    int v;
-    printf("\nEnter the value which you want to insert in the node\n");
-    scanf("%d",&v);
-    struct node *temp;
-    temp = (struct node *)(malloc(sizeof(struct node)));
-    if(*p=NULL)
-    {
-        temp->val = v;
-        temp->next = NULL;
-        *p = temp;
-    }
-    else
-    {
-        temp->val = v;
+        int a;
+        scanf("%d",&a);
+        struct node *temp;
+        temp = (struct node *)malloc(sizeof(struct node));
+        temp->val = a;
         temp->next = *p;
         *p = temp;
-    }
    
 }
 
