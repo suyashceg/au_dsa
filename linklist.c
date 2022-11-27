@@ -1,209 +1,115 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node 
+struct node
 {
-    int val;
+    int data;
     struct node *next;
 };
 
-void addbeg(struct node **);
-void append(struct node **);
-void addatpos(struct node **);
-void addbeforepos(struct node **,int);
-void delbeg(struct node **);
-void delend(struct node **);
-void delatpos(struct node **);
-void display(struct node **);
+struct node *head=NULL;
+
+void addbeg(int val);
+void addlast(int val);
+void addatloc(int val,int loc);
+void delbeg();
+void dellast();
+void delatloc();
+void display();
 
 void main()
 {
-    struct node *head;
-    head = (struct node *)(malloc(sizeof(struct node)));
-    int choice=0;
-    while(1)
+    int choice,data,location;
+    while(choice!=8)
     {
-        printf("\nEnter 1 to insert element at the beginning\n");
-        printf("\nEnter 2 to insert element at the last\n");
-        printf("\nEnter 3 to insert element at specific position\n");
-        printf("\nEnter 4 to delete element at the beginning\n");
-        printf("\nEnter 5 to delete element at the end\n");
-        printf("\nEnter 6 to delete element at specific position\n");
-        printf("\nEnter 7 to display all elements\n");
-        printf("\nEnter 8 to exit\n");
-        scanf("%d",&choice);
-        switch(choice)
-        {
-            
-            case 1:
-                addbeg(&head);
-                break;
-            case 2:
-                append(&head);
-                break;
-            case 3:
-                addatpos(&head);
-                break;
-            case 4:
-                delbeg(&head);
-                break;
-            case 5:
-                delend(&head);
-                break;
-            case 6:
-                delatpos(&head);
-                break;
-            case 7:
-                display(&head);
-                break;
-            case 8:
-                return;
-        }
+    printf("\nEnter 1 to add at beginning\n");
+    printf("\nEnter 2 to add at last\n");
+    printf("\nEnter 7 to display the link list\n");
+    printf("\nEnter 8 to exit");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+            printf("\nenter the data:");
+            scanf("%d",&data);
+            addbeg(data);
+            break;
+        case 2:
+            printf("\nenter the data:");
+            scanf("%d",&data);
+            addlast(data);
+            break;
+        case 3:
+            printf("\nEnter the data:");
+            scanf("%d",&data);
+            printf("\nEnter the location:");
+            scanf("%d",&location);
+            addatloc(data,location);
+            break;
+        case 7:
+            display();
+            break;
     }
-    
-    
+    }
+
 }
 
-void addbeg(struct node **p)
+void addbeg(int val)
 {
-        int a;
-        scanf("%d",&a);
-        struct node *temp;
-        temp = (struct node *)malloc(sizeof(struct node));
-        temp->val = a;
-        temp->next = *p;
-        *p = temp;
-   
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = val;
+    newnode->next = head;
+    head = newnode;
 }
 
-void append(struct node **p)
+void addlast(int val)
 {
-    int v;
-    struct node *temp,*r;
-    printf("\nEnter the value which you want to insert in the node\n");
-    scanf("%d",&v);
-    if(*p==NULL)
+    struct node *temphead = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = val;
+    newnode->next = NULL;
+    if(head==NULL)
     {
-        temp = (struct node *)malloc(sizeof(struct node));
-        temp->val = v;
-        temp->next = NULL;
-        *p = temp;
-        printf("temp");
+        
+        head = newnode;
     }
     else
     {
-        temp = *p;
-        while(temp->next !=NULL)
+        while(temphead->next!=NULL)
         {
-            temp = temp->next;
+            temphead=temphead->next;
         }
-        r = (struct node *)malloc(sizeof(struct node));
-        r->val = v;
-        r->next = NULL;
-        temp->next = r;
+        temphead->next = newnode;
     }
 }
 
-void addatpos(struct node **p)
+void addatloc(int val,int loc)
 {
-    struct node *temp,*r;
-    int v,pos;
-    printf("\nEnter the value which you want to insert in the node(pos insertion)\n");
-    scanf("%d",&v);
-    printf("\nenter the position at which you want to insert\n");
-    scanf("%d",&pos);
-    temp = *p;
-    for(int i=0;i<pos-1;i++)
+    loc = loc -1;
+    struct node *temphead = head;
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = val;
+    newnode->next = NULL;
+    for(int i=0;i<loc;i++)
     {
-        temp = temp->next;
-        if(temp==NULL)
+        temphead = temphead->next;
+        if(temphead==NULL)
         {
-            printf("underflow");
+            printf("overflow");
             return;
         }
-        
-
     }
-    r = (struct node *)malloc(sizeof(struct node));
-    r->val = v;
-    r->next = temp->next;
-    temp->next = r;
+    newnode->next = temphead->next; 
+    temphead->next = newnode;
 }
 
-void addbeforepos(struct node **p,int pos)
+void display()
 {
-    struct node *temp,*r;
-    int v;
-    printf("\nEnter the value which you want to insert in the node\n");
-    scanf("%d",&v);
-    temp = *p;
-    for(int i=0;i<pos-1;i++)
-    {
-        temp = temp->next;
-        if(temp==NULL)
-        {
-            printf("underflow");
-            return;
-        }
-        
-
-    }
-    r = (struct node *)malloc(sizeof(struct node));
-    r->val = v;
-    r->next = temp->next;
-    temp->next = r;
-}
-
-void delbeg(struct node **p)
-{
-    struct node *temp = *p,*first = *p;
-    temp = temp->next;
-    *p = temp;
-    free(first);
-}
-
-void delend(struct node **p)
-{
-    struct node *temp = *p,*secondlast;
-    while(temp->next->next!=NULL)
-    {
-        temp = temp->next;
-    }
-    secondlast = temp;
-    secondlast->next = NULL;
-    free(temp->next);
-}
-
-void delatpos(struct node **p)
-
-{
-    struct node *temp,*posnode;
-    int pos;
-    printf("\nenter the position at which you want to delete\n");
-    scanf("%d",&pos);
-    temp =*p;
-    for(int i=0;i<pos-1;i++)
-    {
-        temp = temp->next;
-        if(temp==NULL)
-        {
-            printf("underflow");
-            return;
-        }
-
-    }
-    posnode = temp->next;
-    temp->next = temp->next->next;
-    free(posnode);
-}
-
-void display(struct node **p)
-{
-    struct node *temp = *p;
+    struct node *temp;
+    temp=head;
     while(temp!=NULL)
     {
-        printf("%d",temp->val);
-        temp = temp->next;
+        printf("%d\t",temp->data);
+        temp=temp->next;
     }
-    
 }
