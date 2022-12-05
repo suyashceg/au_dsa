@@ -63,7 +63,7 @@ void display()
     }
 }
 
-void search(int value)
+void search(int value)                                       
 {
     int flag=0,count=0;
     struct node *temp = front;
