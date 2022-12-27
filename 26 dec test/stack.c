@@ -1,4 +1,3 @@
-// Online C compiler to run C program online
 #include <stdio.h>
 #include <ctype.h>
 
@@ -8,7 +7,7 @@ int top=-1;
 void push()
 {
     char tempt;
-    tempt=getchar(); //to clear the input buffer which has choice entered
+    tempt=getchar(); //to clear the enter key press input which got stored in the input buffer
     printf("please enter the character you would like to add\n");
     scanf("%c",&tempt);  //this line will get clean input
     if(isalpha(tempt)==0)
