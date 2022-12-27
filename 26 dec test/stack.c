@@ -7,7 +7,7 @@ int top=-1;
 void push()
 {
     char tempt;
-    tempt=getchar(); //to clear the input buffer which may have enter key or \n character
+    tempt=getchar(); //to clear the input buffer which may have enter key or newline character(\n)
     printf("please enter the character you would like to add\n");
     scanf("%c",&tempt);  //this line will get clean input
     if(isalpha(tempt)==0)
