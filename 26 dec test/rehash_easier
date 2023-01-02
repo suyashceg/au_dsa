@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int h[10];
+int h2[20];
+
+void insert()
+{
+    int i,val;
+    printf("Enter value: ");
+    scanf("%d",&val);
+    int key = val%10;
+    if(h[key]==-1)
+        h[key]=val;
+    else
+    {
+        for(int i=0;i<10;i++)
+        {
+
+            key = (val%10 + i*(key%5)) % 10;
+           
+            if(h[key]==-1)
+            {
+                h[key] = val;
+                return;
+            }
+        }
+
+    }
+}
+
+void newinsert()
+{
+    int i,val;
+    printf("Enter value: ");
+    scanf("%d",&val);
+    int key = val%20;
+    if(h2[key]==-1)
+        h2[key]=val;
+    else
+    {
+        for(int i=1;i<20;i++)
+        {
+
+            key = (val%20 + i*(key%5)) % 20;
+           
+            if(h2[key]==-1)
+            {
+                h2[key] = val;
+                return;
+            }
+        }
+
+    }
+}
+
+void display()
+{
+    for(int i=0;i<10;i++)
+        printf("\n%d\t%d",i,h[i]);
+}
+
+void newdisplay()
+{
+    for(int i=0;i<20;i++)
+        printf("\n%d\t%d",i,h2[i]);
+}
+
+void rehash()
+{
+    for(int i=0;i<10;i++)
+    {
+        h2[i] = h[i];
+    }
+}
+
+int main()
+{
+    int ch;
+    int flag=0;
+    for(int i=0;i<10;i++)
+        h[i] = -1;
+    for(int i=0;i<20;i++)
+        h2[i] = -1;
+    while(ch!=9)
+    {
+        printf("\n1.insert\n2.display\n3.9 for exit");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                if(flag==0)
+                insert();
+                if(flag==1)
+                newinsert();
+                break;
+            case 2:
+                if(flag==0)
+                display();
+                if(flag==1)
+                newdisplay();
+                break;
+            case 3:
+                rehash();
+                flag=1;
+                break;
+        }
+    }
+    return 0;
+}
