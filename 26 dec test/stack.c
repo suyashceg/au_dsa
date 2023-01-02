@@ -7,9 +7,9 @@ int top=-1;
 void push()
 {
     char tempt;
-    tempt=getchar(); //to clear the input buffer which may have enter key or newline character(\n)
+    tempt=getchar(); 
     printf("please enter the character you would like to add\n");
-    scanf("%c",&tempt);  //this line will get clean input
+    scanf("%c",&tempt); 
     if(isalpha(tempt)==0)
     {
         printf("please enter a valid character");
@@ -52,14 +52,28 @@ void pop()
     }
 }
 
+void occur()
+{
+    printf("\nenter the character for which you want to check for the occurence");
+    char t;
+    int count=0;
+    scanf("%c",&t);
+    for(int i=0;i<=top;i++)
+    {
+        if(arr[i] == t)
+            count++;
+    }
+    printf("\noccurence of character %c is %d",t,count);
+}
+
 int main() {
-    // Write C code here
     int ch;
     while(1)
     {
     printf("\nenter 1 to add character");
     printf("\nenter 2 to display all the contents of the stack");
     printf("\nenter 3 to pop an element");
+    printf("\nenter 4 to search for an element");
     printf("\nenter 9 to exit\n");
     scanf("%d",&ch);
     if(ch==1)
@@ -68,8 +82,10 @@ int main() {
         display();
     else if(ch==3)
         pop();
+    else if(ch==4)
+        occur();
     else if(ch==9)
-        return;
+        return 0;
     }
     for(int i=0;i<=top;i++)
     printf("%c",arr[top]);
